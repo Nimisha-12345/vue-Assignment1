@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Assignment</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        {{errorMessage}}
+        <form>
+          <label for="fname">{{name}}</label>
+          <input
+            type="text"
+            v-model="fname"
+            id="fname"
+            name="fname"
+            placeholder="FirstName"
+          />
+          <label for="lname">{{last}}</label>
+          <input
+            type="text"
+            v-model="lname"
+            id="lname"
+            name="lname"
+            placeholder="LastName"
+          />
+          <label for="address">{{adrs}}</label>
+          <input
+            type="text"
+            v-model="address"
+            id="address"
+            name="address"
+            placeholder="Address"
+          />
+          <label for="button"></label>
+          <button @click.prevent="addItem">Add</button>
+          <span>{{newItem}}</span>
+        </form>
+
+        <table>
+          <tr v-for="(user, index) in users" :key="user.id">
+            <td class="s1" v-bind:class="{display: user.active}">
+              {{user.dress}}
+            </td>
+            <td v-bind:class="{display: user.active}">{{user.quality}}</td>
+            <td v-bind:class="{display: user.active}">{{user.product}}</td>
+            <td v-bind:class="{display: user.active}" class="set">
+              <button @click="delItem(index)">X</button>
+              <label
+                ><input type="checkbox" class="sheet" v-model="user.active"
+              /></label>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          name: "FirstName",
+          last: "LastName",
+          adrs: "Address",
+          errorMessage: "",
+          fname: "",
+          lname: "",
+          active: false,
+          isActive: true,
+          address: "",
+          users: [],
+          newItem: "",
+        },
+        methods: {
+          addItem() {
+            if (!this.fname || !this.lname || !this.address) {
+              this.errorMessage = "";
+            } else {
+              this.users.push({
+                dress: this.fname,
+                quality: this.lname,
+                product: this.address,
+                active: false,
+              });
+              this.fname = "";
+              this.lname = "";
+              this.address = "";
+            }
+          },
+          delItem(user) {
+            this.users.splice(user, 1);
+          },
+        },
+      });
+    </script>
+
+    <style>
+      .display {
+        color: red;
+      }
+      button {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+      }
+      input[type="text"] {
+        height: 20px;
+      }
+      .set {
+        width: 118px;
+      }
+      .s1 {
+        width: 257px;
+      }
+    </style>
+  </body>
+</html>
